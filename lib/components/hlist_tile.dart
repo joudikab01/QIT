@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class HListTile extends StatefulWidget {
   late String text;
-  HListTile({required this.text, Key? key}) : super(key: key);
+   void Function() callback;
+  HListTile({required this.text,required this.callback, Key? key}) : super(key: key);
 
   @override
   State<HListTile> createState() => _HListTileState();
@@ -16,7 +17,7 @@ class _HListTileState extends State<HListTile> {
     double _height = _size.height;
     Color color = Colors.grey;
     return GestureDetector(
-      onTap: (){},
+      onTap: widget.callback,
       child: SizedBox(width: _width/3,height: 10,
         child: ListTile(
             tileColor: Colors.grey[800],

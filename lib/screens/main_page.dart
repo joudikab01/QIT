@@ -2,37 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qit_test/models/product.dart';
 import '../components/components.dart';
+import '../locator.dart';
 import '../providers/data_manager.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ProductsPage extends ConsumerWidget {
-  // Category category;
-  // Products products;
   ProductsPage(
       {
-      //required this.category,required this.products,
       Key? key})
       : super(key: key);
   static final productProvider =
       ChangeNotifierProvider<ProductsProvider>((ref) => ProductsProvider());
-  //Product product = const Product(id: 1, title: 'Xbox', price: 100, description: 'hjdkf', category: 'elec',rating: Rating(rate: 20, count: 10), image: 'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(productProvider);
-    // ref.read(productProvider.notifier).getCategories();
-    // List cat = notifier.categories;
-    // ref.read(productProvider.notifier).getProducts(cat[0]);
-    // List<Product> products = notifier.products;
+    var providerr = locator.get<ProductsProvider>();
     var _size = MediaQuery.of(context).size;
     double _width = _size.width;
     double _height = _size.height;
+    //print('this is get it ${providerr.getCategoriesName}');
     return Scaffold(
+      backgroundColor: Color(0Xff333742),
       drawer: const Icon(
         Icons.wysiwyg,
         color: Colors.white,
       ),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey[800],
+        backgroundColor:Color(0Xff333742),
         actions: [
           IconButton(
             onPressed: () {},
@@ -50,7 +47,8 @@ class ProductsPage extends ConsumerWidget {
               builder: (context, AsyncSnapshot snapshot) {
                 List cats = snapshot.data ?? [];
                 if (cats.isNotEmpty) {
-                  return SizedBox(
+                  return Container(
+                    color: Color(0Xff333742),
                     width: _width,
                     height: _height / 12,
                     child: ListView.builder(
@@ -59,7 +57,17 @@ class ProductsPage extends ConsumerWidget {
                       shrinkWrap: true,
                       primary: false,
                       itemBuilder: (BuildContext context, int index) {
-                        return HListTile(text: cats[index]);
+                        return HListTile(
+                          text: cats[index],
+                          callback: () {
+                            ref
+                                .read(productProvider.notifier)
+                                .getProducts(cats[index]);
+                            ref
+                                .read(productProvider.notifier)
+                                .changeCategory(index);
+                          },
+                        );
                       },
                     ),
                   );
@@ -70,26 +78,29 @@ class ProductsPage extends ConsumerWidget {
                 }
               }),
           Consumer(builder: (context, ref, child) {
-            List prod = notifier.getProduct ;
-            if (prod.isEmpty) {
+            List prod = notifier.getProduct;
+            if (prod.isNotEmpty) {
               return Expanded(
-                child: GridView.builder(
-                  itemCount: 10,
+                child: MasonryGridView.count(
+                  itemCount: prod.length,
                   scrollDirection: Axis.vertical,
-                  primary: true,
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                  ),
+                  // primary: true,
+                  // shrinkWrap: true,
+                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  //   crossAxisCount: 2,
+                  //   crossAxisSpacing: 5,
+                  //   mainAxisSpacing: 5,
+                  // ),
                   itemBuilder: (BuildContext context, int index) {
                     return VListTile(product: prod[index]);
                   },
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
                 ),
               );
             }
-            return Text('');
+            return Text('hello');
           }),
         ],
       ),

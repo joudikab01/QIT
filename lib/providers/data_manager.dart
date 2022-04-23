@@ -56,8 +56,8 @@ class ProductsProvider extends ChangeNotifier {
     Response response =
         await Dio().get('https://fakestoreapi.com/products/category/$name');
     //products.clear();
-    //products = (response.data as List).map((x) => Product.fromJson(x)).toList();
-    //print(products);
+    products = Products.fromJson(response.data).pproducts;
+    print(products);
     //print((Products.fromJson(response.data)).pproducts);
     return Products.fromJson(response.data);
   }

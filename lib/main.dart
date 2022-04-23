@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:qit_test/providers/data_manager.dart';
+import 'locator.dart';
 import 'models/routing.dart';
 import 'screens/screens.dart';
 import 'package:fluro/fluro.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-GetIt getIt = GetIt.instance;
 
 
 void main() {
+  setupLocator();
   runApp(
     const ProviderScope(
       child: MyApp(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qit_test/components/rating_card.dart';
 
 import '../models/product.dart';
 
@@ -12,10 +13,10 @@ class VListTile extends StatelessWidget {
     var _height = _size.height;
     var _width = _size.width;
     return SizedBox(
-      height: _height/3,
+      height: _height / 2.3,
       child: Card(
         semanticContainer: true,
-        color: Colors.grey[700],
+        color: Color(0Xff454D5A),
         elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -27,11 +28,12 @@ class VListTile extends StatelessWidget {
         child: Stack(
           children: [
             Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   constraints: BoxConstraints(
-                    maxWidth: _width / 2,
-                    maxHeight: _height / 5,
+                    // maxWidth: _width / 3,
+                    maxHeight: _height / 4,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
@@ -51,39 +53,80 @@ class VListTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 12,
                 ),
-                Text(
-                  product.title,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.title,
+                        style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(height: 8,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            " '\$' ${product.price.toString()}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17
+                            ),
+                          ),
+                          Text(
+                            " \$ ${product.price.toString()}",
+                            style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Text(
-                  product.price.toString(),
-                ),
+
               ],
             ),
             Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    //rating card
+                    RatingCard(rating: product.rating),
                     IconButton(
                       onPressed: () {},
                       icon: Icon(
                         Icons.star_border,
-                        color: Colors.yellow,
+                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
-                IconButton(
+              ],
+            ),
+            Positioned(
+              bottom: _height/7,
+              right: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    15,
+                  ),
+                  color: Colors.black45,
+                ),
+                child: IconButton(
                   onPressed: () {},
                   icon: Icon(
                     Icons.shopping_cart,
-                    color: Colors.red,
+                    color: Colors.white,
+                    size: 17,
                   ),
                 ),
-              ],
-            ),
+              ),
+            )
           ],
         ),
       ),
