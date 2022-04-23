@@ -97,9 +97,10 @@ class LoginScreen extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
-                  ref
-                      .read(productProvider.notifier)
-                      .loginRequest(userController.text, passwordController.text);
+                  // ref
+                  //     .read(productProvider.notifier)
+                  //     .loginRequest(userController.text, passwordController.text);
+
                   // ref.read(productProvider).getCategories();
                   // //ref.read(productProvider.notifier).getProducts('electronics');
                   // //print(notifier.getProduct);
@@ -117,7 +118,7 @@ class LoginScreen extends ConsumerWidget {
                   //   );
                   // } else {
                   //   ref.read(productProvider.notifier).getProducts(cat[0]);
-                  //   Navigator.pushNamed(context, '/products/${cat[0]}');
+                Navigator.pushNamed(context, '/products');
                   // }
                 },
                 child: const Text(

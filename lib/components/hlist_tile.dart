@@ -16,10 +16,8 @@ class _HListTileState extends State<HListTile> {
     double _height = _size.height;
     Color color = Colors.grey;
     return GestureDetector(
-      onTap: (){setState(() {
-        color = Colors.white;
-      });},
-      child: SizedBox(width: _width/6,height: 10,
+      onTap: (){},
+      child: SizedBox(width: _width/3,height: 10,
         child: ListTile(
             tileColor: Colors.grey[800],
             title: Text(

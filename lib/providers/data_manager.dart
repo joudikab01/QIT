@@ -1,9 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qit_test/services/data_service.dart';
-
-import '../models/category.dart';
 import '../models/product.dart';
 import '../models/products.dart';
 import '../models/response.dart' as re;
@@ -77,6 +73,7 @@ class ProductsProvider extends ChangeNotifier {
     return response.data;
 
   }
+
 
   // Future <List<Product>> getAllData(){
   //   DataService dataService = DataService();
