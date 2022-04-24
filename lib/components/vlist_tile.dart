@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qit_test/components/rating_card.dart';
-
 import '../models/product.dart';
 
 class VListTile extends StatelessWidget {
@@ -16,9 +15,9 @@ class VListTile extends StatelessWidget {
       height: _height / 2.3,
       child: Card(
         semanticContainer: true,
-        color: Color(0Xff454D5A),
+        color: const Color(0Xff454D5A),
         elevation: 3,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(
               16,
@@ -28,7 +27,6 @@ class VListTile extends StatelessWidget {
         child: Stack(
           children: [
             Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   constraints: BoxConstraints(
@@ -61,15 +59,15 @@ class VListTile extends StatelessWidget {
                     children: [
                       Text(
                         product.title,
-                        style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w500),
+                        style: const TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(height: 8,),
+                      const SizedBox(height: 8,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             " '\$' ${product.price.toString()}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 17
@@ -77,7 +75,7 @@ class VListTile extends StatelessWidget {
                           ),
                           Text(
                             " \$ ${product.price.toString()}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               decoration: TextDecoration.lineThrough,
                               color: Colors.white,
                             ),
@@ -98,7 +96,7 @@ class VListTile extends StatelessWidget {
                     RatingCard(rating: product.rating),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.star_border,
                         color: Colors.white,
                       ),
@@ -119,7 +117,7 @@ class VListTile extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.shopping_cart,
                     color: Colors.white,
                     size: 17,

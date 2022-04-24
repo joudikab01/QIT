@@ -6,10 +6,10 @@ import 'package:qit_test/screens/screens.dart';
 class Routing {
   static final router = FluroRouter();
 
-  static Handler _loginHandler = Handler(
+  static final Handler _loginHandler = Handler(
       handlerFunc: (context, Map<String, dynamic> params) => LoginScreen());
 
-  static Handler _mainHandler = Handler(
+  static final Handler _mainHandler = Handler(
       handlerFunc: (context, Map<String, dynamic> params) => ProductsPage(
           ));
 
@@ -18,7 +18,7 @@ class Routing {
     router.define('/products', handler: _mainHandler);
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
-      return Scaffold();
+      return const Scaffold();
     });
   }
 }

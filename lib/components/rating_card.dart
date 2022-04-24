@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/rating.dart';
 
 class RatingCard extends StatelessWidget {

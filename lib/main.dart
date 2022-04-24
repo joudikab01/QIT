@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qit_test/providers/data_manager.dart';
 import 'locator.dart';
 import 'models/routing.dart';
-import 'screens/screens.dart';
-import 'package:fluro/fluro.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -35,11 +31,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: ProductsPage(category: 'elec',),
       initialRoute: '/login',
       onGenerateRoute: Routing.router.generator,
     );

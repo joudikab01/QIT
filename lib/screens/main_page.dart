@@ -1,26 +1,53 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qit_test/models/product.dart';
 import '../components/components.dart';
 import '../locator.dart';
 import '../providers/data_manager.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import '../providers/hlist_provider.dart';
 
-class ProductsPage extends ConsumerWidget {
-  ProductsPage(
-      {
-      Key? key})
-      : super(key: key);
+class ProductsPage extends ConsumerStatefulWidget {
+  @override
+  _ProductsPageState createState() => _ProductsPageState();
+}
+
+class _ProductsPageState extends ConsumerState {
+  _ProductsPageState({Key? key}) : super();
   static final productProvider =
       ChangeNotifierProvider<ProductsProvider>((ref) => ProductsProvider());
+
+  bool isTapped = false;
+  Color? color = Colors.grey[800];
+  double size = 80;
+  final HListMsg _hListMsg = locator<HListMsg>();
+  late StreamSubscription<int> streamSubscription;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    streamSubscription = _hListMsg.idStream.listen(iid);
+    super.initState();
+  }
+
+  void iid(int id) {
+    setState(() {
+      if (id == ref.read(productProvider.notifier).category) {
+        isTapped = true;
+        color = Colors.white;
+        size = 20;
+      } else {
+        isTapped = false;
+        color = Colors.grey[800];
+        size = 10;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final notifier = ref.watch(productProvider);
-    var providerr = locator.get<ProductsProvider>();
     var _size = MediaQuery.of(context).size;
     double _width = _size.width;
     double _height = _size.height;
-    //print('this is get it ${providerr.getCategoriesName}');
     return Scaffold(
       backgroundColor: Color(0Xff333742),
       drawer: const Icon(
@@ -29,7 +56,7 @@ class ProductsPage extends ConsumerWidget {
       ),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor:Color(0Xff333742),
+        backgroundColor: Color(0Xff333742),
         actions: [
           IconButton(
             onPressed: () {},
@@ -58,7 +85,9 @@ class ProductsPage extends ConsumerWidget {
                       primary: false,
                       itemBuilder: (BuildContext context, int index) {
                         return HListTile(
+                          size: size,
                           text: cats[index],
+                          id: index,
                           callback: () {
                             ref
                                 .read(productProvider.notifier)
@@ -66,15 +95,14 @@ class ProductsPage extends ConsumerWidget {
                             ref
                                 .read(productProvider.notifier)
                                 .changeCategory(index);
+                            _hListMsg.broadcastId(index);
                           },
                         );
                       },
                     ),
                   );
                 } else {
-                  return Text(
-                    'Loading',
-                  );
+                  return Center(child: CircularProgressIndicator());
                 }
               }),
           Consumer(builder: (context, ref, child) {
@@ -84,13 +112,6 @@ class ProductsPage extends ConsumerWidget {
                 child: MasonryGridView.count(
                   itemCount: prod.length,
                   scrollDirection: Axis.vertical,
-                  // primary: true,
-                  // shrinkWrap: true,
-                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //   crossAxisCount: 2,
-                  //   crossAxisSpacing: 5,
-                  //   mainAxisSpacing: 5,
-                  // ),
                   itemBuilder: (BuildContext context, int index) {
                     return VListTile(product: prod[index]);
                   },
@@ -100,10 +121,16 @@ class ProductsPage extends ConsumerWidget {
                 ),
               );
             }
-            return Text('hello');
+            return Center(child: CircularProgressIndicator());
           }),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription.cancel();
   }
 }

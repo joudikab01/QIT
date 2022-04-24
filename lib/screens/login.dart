@@ -87,7 +87,8 @@ class LoginScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(
                         25,
                       ),
-                      borderSide: const BorderSide(color: Colors.black, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
                     ),
                   ),
                 ),
@@ -97,9 +98,16 @@ class LoginScreen extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // ref
-                  //     .read(productProvider.notifier)
-                  //     .loginRequest(userController.text, passwordController.text);
+                  if (userController.text == 'info@qit.company' &&
+                       passwordController.text == '123456') {
+                    Navigator.pushNamed(context, '/products');
+                    ref.read(productProvider.notifier).loginRequest(
+                        userController.text, passwordController.text);
+                  }
+                  else{
+                    SnackBar s=SnackBar(content: Text('please try again'),);
+                    ScaffoldMessenger.of(context).showSnackBar(s);
+                  }
 
                   // ref.read(productProvider).getCategories();
                   // //ref.read(productProvider.notifier).getProducts('electronics');
@@ -118,7 +126,7 @@ class LoginScreen extends ConsumerWidget {
                   //   );
                   // } else {
                   //   ref.read(productProvider.notifier).getProducts(cat[0]);
-                Navigator.pushNamed(context, '/products');
+                  //Navigator.pushNamed(context, '/products');
                   // }
                 },
                 child: const Text(

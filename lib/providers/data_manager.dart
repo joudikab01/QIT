@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../models/products.dart';
-import '../models/response.dart' as re;
+
 
 class ProductsProvider extends ChangeNotifier {
   int selectedCategory = 0;
@@ -45,11 +45,11 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> get getProduct => products;
   List<dynamic> get getCategoriesName => categories;
 
-   Future<re.Response> loginRequest(String email, String password) async {
+   Future<void> loginRequest(String email, String password) async {
     Response response = await Dio().post(
         'http://restapi.adequateshop.com/api/authaccount/login?email=${email}&password=${password}');
-    print(response.data);
-  return re.Response.fromJson(response.data);
+    //print(response.data);
+  return null;
    }
 
   Future<Products> getProducts(String name) async {
@@ -57,7 +57,7 @@ class ProductsProvider extends ChangeNotifier {
         await Dio().get('https://fakestoreapi.com/products/category/$name');
     //products.clear();
     products = Products.fromJson(response.data).pproducts;
-    print(products);
+    //print(products);
     //print((Products.fromJson(response.data)).pproducts);
     return Products.fromJson(response.data);
   }
